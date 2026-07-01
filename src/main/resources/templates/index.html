@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Appointment Booking</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1>🏥 Medical Appointment Booking</h1>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/appointments">View Appointments</a></li>
+                <li><a href="/appointment/new">Book Appointment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Book Your Medical Appointment</h2>
+            <p>Easy, fast, and secure appointment booking with our experienced doctors</p>
+            <a href="/appointment/new" class="btn btn-primary">Book Now</a>
+        </div>
+
+        <div class="dashboard">
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Total Doctors</h3>
+                    <p class="stat-number" th:text="${doctors.size()}">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Appointments</h3>
+                    <p class="stat-number" th:text="${appointments.size()}">0</p>
+                </div>
+            </div>
+
+            <div class="recent-appointments">
+                <h3>Recent Appointments</h3>
+                <div class="appointment-grid">
+                    <div th:each="appointment : ${appointments}" class="appointment-card">
+                        <h4 th:text="${appointment.patientName}">Patient Name</h4>
+                        <p><strong>Doctor:</strong> <span th:text="${appointment.doctor.name}">Doctor Name</span></p>
+                        <p><strong>Specialization:</strong> <span th:text="${appointment.doctor.specialization}">Specialization</span></p>
+                        <p><strong>Date & Time:</strong> <span th:text="${appointment.appointmentDateTime}">Date</span></p>
+                        <p><strong>Status:</strong> <span class="status" th:text="${appointment.status}">Status</span></p>
+                        <div class="appointment-actions">
+                            <a th:href="@{/appointment/cancel/{id}(id=${appointment.id})}" 
+                               class="btn btn-danger btn-sm">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Medical Appointment Booking System</p>
+        </div>
+    </footer>
+</body>
+</html>
